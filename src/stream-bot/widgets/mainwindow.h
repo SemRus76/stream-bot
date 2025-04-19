@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QMainWindow>
-#include "../../media-controller/widgets/media_player.h"
+#include "media-controller/widgets/media_player.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

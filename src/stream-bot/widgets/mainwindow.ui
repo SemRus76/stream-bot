@@ -36,7 +36,7 @@
   <customwidget>
    <class>MediaPlayer</class>
    <extends>QWidget</extends>
-   <header location="global">/home/semrus/Документы/Repos/stream-bot/src/media-controller/widgets/media_player.h</header>
+   <header location="global">media-controller/widgets/media_player.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
