@@ -32,8 +32,11 @@ private slots:
     void on_btnPause_clicked();
     void on_btnAddTrack_clicked();
     void on_btnRemoveTrack_clicked();
-
     void on_playlist_currentRowChanged(int currentRow);
+    void on_btnNextTrack_clicked();
+    void on_btnPrevTrack_clicked();
+    void on_btnRepeatMode_clicked();
+    void on_btnShuffleMode_clicked();
 
 private:
     void refreshPlaylistView();
@@ -44,6 +47,7 @@ private:
     QMediaPlaylist* _mediaPlaylist = nullptr;
     QList<QString> _playlist;
 
-
+    int _repeatStatus = {0};
+    bool _shuffleStatus = {false};
 };
 

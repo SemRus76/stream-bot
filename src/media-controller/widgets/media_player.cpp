@@ -53,7 +53,6 @@ void MediaPlayer::on_btnPlay_clicked()
     _player->play();
 }
 
-
 void MediaPlayer::on_btnStop_clicked()
 {
     ui->btnPause->setEnabled(false);
@@ -61,7 +60,6 @@ void MediaPlayer::on_btnStop_clicked()
     ui->btnPlay->setEnabled(true);
     _player->stop();
 }
-
 
 void MediaPlayer::on_btnPause_clicked()
 {
@@ -74,19 +72,21 @@ void MediaPlayer::on_btnPause_clicked()
 
 void MediaPlayer::on_btnAddTrack_clicked()
 {
-    QString track = QFileDialog::getOpenFileName(this,
-                                                 u8"Выберете файл трека",
-                                                 "/home",
-                                                 "Music(*.mp3 *.wav);;Video(*.mp4);;All Files(*)");
+    QStringList tracks = QFileDialog::getOpenFileNames(this,
+                                                       u8"Выберете файл трека",
+                                                       "/home",
+                                                       "Music(*.mp3 *.wav);;Video(*.mp4);;All Files(*)");
+    if (tracks.empty())
+        return;
 
-    QString nameTrack = track.mid(track.lastIndexOf("/") + 1,
-                                  track.lastIndexOf(".") - track.lastIndexOf("/") - 1);
+    for (QString& track : tracks)
+    {
+        QString nameTrack = track.mid(track.lastIndexOf("/") + 1,
+                                      track.lastIndexOf(".") - track.lastIndexOf("/") - 1);
 
-    _playlist.append(nameTrack);
-//    QUrl trackURL = QUrl::fromLocalFile(track);
-//    _player->playlist()->addMedia(trackURL);
-    _mediaPlaylist->addMedia(QUrl::fromLocalFile(track));
-
+        _playlist.append(nameTrack);
+        _mediaPlaylist->addMedia(QUrl::fromLocalFile(track));
+    }
     refreshPlaylistView();
 }
 
@@ -100,9 +100,12 @@ void MediaPlayer::on_btnRemoveTrack_clicked()
     int indexPlaying = _player->playlist()->currentIndex();
     if (indexPlaying == row)
         _player->stop();
-    _player->playlist()->removeMedia(row);
+    _mediaPlaylist->removeMedia(row);
     _playlist.removeAt(row);
     refreshPlaylistView();
+    // TODO: Решить проблему переключения при удалении трека
+    // TODO->Решение: Возможно стоит удалять элемент, запоминая его точку
+    // Воспроизведения, а после удаления находить его и включать с этой точки
 }
 
 
@@ -118,6 +121,69 @@ void MediaPlayer::refreshPlaylistView()
         ui->playlist->addItem(_playlist[i]);
     }
     // TODO: Подумать над перезапуском проигрывания
+
+    if (_playlist.empty())
+    {
+        ui->btnNextTrack->setEnabled(false);
+        ui->btnPrevTrack->setEnabled(false);
+    }
+    else
+    {
+        ui->btnNextTrack->setEnabled(true);
+        ui->btnPrevTrack->setEnabled(true);
+    }
+}
+
+void MediaPlayer::on_btnNextTrack_clicked()
+{
+    int doo = _mediaPlaylist->currentIndex();
+    _mediaPlaylist->next();
+    int posle = _mediaPlaylist->currentIndex();
+    Q_UNUSED(doo)
+    Q_UNUSED(posle)
+}
+
+void MediaPlayer::on_btnPrevTrack_clicked()
+{
+    int doo = _mediaPlaylist->currentIndex();
+    _mediaPlaylist->previous();
+    int posle = _mediaPlaylist->currentIndex();
+    Q_UNUSED(doo)
+    Q_UNUSED(posle)
+}
+
+void MediaPlayer::on_btnRepeatMode_clicked()
+{
+    if (!_repeatStatus)
+    {
+        _repeatStatus = 1;
+        _mediaPlaylist->setPlaybackMode(QMediaPlaylist::PlaybackMode::Loop);
+    }
+    else if (_repeatStatus == 1)
+    {
+        _repeatStatus = 2;
+        _mediaPlaylist->setPlaybackMode(QMediaPlaylist::PlaybackMode::CurrentItemInLoop);
+    }
+    else
+    {
+        _repeatStatus = 0;
+        _mediaPlaylist->setPlaybackMode(QMediaPlaylist::PlaybackMode::CurrentItemOnce);
+    }
+}
+
+void MediaPlayer::on_btnShuffleMode_clicked()
+{
+//    QMediaPlaylist::PlaybackMode mode = ;
+    if (!_shuffleStatus)
+    {
+        _shuffleStatus = true;
+        _mediaPlaylist->setPlaybackMode(QMediaPlaylist::PlaybackMode::Random);
+    }
+    else
+    {
+        _shuffleStatus = false;
+        _mediaPlaylist->setPlaybackMode(QMediaPlaylist::PlaybackMode::Sequential);
+    }
 }
 
 void MediaPlayer::on_playlist_currentRowChanged(int currentRow)
@@ -130,4 +196,5 @@ void MediaPlayer::on_playlist_currentRowChanged(int currentRow)
     ui->btnRemoveTrack->setEnabled(true);
 
 }
+
 

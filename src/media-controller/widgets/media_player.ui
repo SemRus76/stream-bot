@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>746</width>
-    <height>623</height>
+    <width>845</width>
+    <height>685</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -47,7 +47,8 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset theme="list-add"/>
+          <iconset theme="list-add">
+           <normaloff>.</normaloff>.</iconset>
          </property>
         </widget>
        </item>
@@ -57,7 +58,8 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset theme="list-remove"/>
+          <iconset theme="list-remove">
+           <normaloff>.</normaloff>.</iconset>
          </property>
         </widget>
        </item>
@@ -68,8 +70,64 @@
    <item>
     <layout class="QVBoxLayout" name="PlayerLayout" stretch="1,1">
      <item>
-      <layout class="QHBoxLayout" name="ControlPlayerLayout">
-       <item>
+      <layout class="QGridLayout" name="gridLayout" rowstretch="1,1" columnstretch="4,2,1,1,2,4" rowminimumheight="1,1" columnminimumwidth="4,2,1,1,2,4">
+       <item row="1" column="1">
+        <widget class="QPushButton" name="btnPrevTrack">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>PREV</string>
+         </property>
+         <property name="icon">
+          <iconset theme="media-skip-backward"/>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="5">
+        <spacer name="RightControlPlayerSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="4">
+        <widget class="QPushButton" name="btnPause">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>PAUSE</string>
+         </property>
+         <property name="icon">
+          <iconset theme="media-playback-pause">
+           <normaloff>.</normaloff>.</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="4">
+        <widget class="QPushButton" name="btnNextTrack">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::RightToLeft</enum>
+         </property>
+         <property name="text">
+          <string>NEXT</string>
+         </property>
+         <property name="icon">
+          <iconset theme="media-skip-forward"/>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
         <spacer name="LeftControlPlayerSpacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -82,7 +140,17 @@
          </property>
         </spacer>
        </item>
-       <item>
+       <item row="1" column="2">
+        <widget class="QPushButton" name="btnRepeatMode">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset theme="media-playlist-repeat"/>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
         <widget class="QPushButton" name="btnStop">
          <property name="enabled">
           <bool>false</bool>
@@ -91,45 +159,31 @@
           <string>STOP</string>
          </property>
          <property name="icon">
-          <iconset theme="media-playback-stop"/>
+          <iconset theme="media-playback-stop">
+           <normaloff>.</normaloff>.</iconset>
          </property>
         </widget>
        </item>
-       <item>
+       <item row="1" column="3">
+        <widget class="QPushButton" name="btnShuffleMode">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset theme="media-playlist-shuffle"/>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2" colspan="2">
         <widget class="QPushButton" name="btnPlay">
          <property name="text">
           <string>PLAY</string>
          </property>
          <property name="icon">
-          <iconset theme="media-playback-start"/>
+          <iconset theme="media-playback-start">
+           <normaloff>.</normaloff>.</iconset>
          </property>
         </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnPause">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>PAUSE</string>
-         </property>
-         <property name="icon">
-          <iconset theme="media-playback-pause"/>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="RightControlPlayerSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </item>
